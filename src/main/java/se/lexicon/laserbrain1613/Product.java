@@ -1,14 +1,14 @@
 package se.lexicon.laserbrain1613;
 
-public abstract class Product { // Note to self, what do all products have in common?
-    private static int productId = 1;
+public class Product { // Note to self, what do all products have in common?
+    private static int productId = 0;
 
     private String itemName;
     private int quantityInStock;
     private int itemPrice;
 
     public Product(String itemName, int quantityInStock, int itemPrice) {
-        productId = productId++;
+        productId = ++productId;
         this.itemName = itemName;
         this.quantityInStock = quantityInStock;
         this.itemPrice = itemPrice;
@@ -38,12 +38,16 @@ public abstract class Product { // Note to self, what do all products have in co
 
     public String examine() {
         String summary = "";
-        summary += ("--- Product details ---");
-        summary += ("Product Id: " + getProductId());
-        summary += ("Item name: " + getItemName());
-        summary += ("Quantity in stock: " + getQuantityInStock());
-        summary += ("Item price " + getItemPrice());
+        summary += ("--- Product details ---\n");
+        summary += ("Product Id: " + getProductId()+"\n");
+        summary += ("Item name: " + getItemName()+"\n");
+        summary += ("Quantity in stock: " + getQuantityInStock()+"\n");
+        summary += ("Item price " + getItemPrice()+"\n");
         return summary;
+    }
+
+    public void resetCounter() {
+        productId = 0;
     }
 
 }

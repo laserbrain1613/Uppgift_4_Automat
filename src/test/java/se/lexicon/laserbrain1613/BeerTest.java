@@ -67,7 +67,6 @@ public class BeerTest {
     public void checkExamineString() {
         //Act
         String str = beer.examine();
-        System.out.println(str);
 
         assertTrue(str.contains("--- Item description ---"));
         assertTrue(str.contains("Container Type: Can"));

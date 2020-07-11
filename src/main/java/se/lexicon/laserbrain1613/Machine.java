@@ -3,7 +3,7 @@ package se.lexicon.laserbrain1613;
 public class Machine {
     //Fields
     private int moneyPool;
-    private Product[] soldProducts = new Product[10]; // Assuming this machine has 10 sell slots, but I won't fill all of them
+    private final Product[] soldProducts = new Product[10]; // Assuming this machine has 10 sell slots, but I won't fill all of them
     private final int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
 
 
@@ -22,29 +22,31 @@ public class Machine {
                 setMoneyPool(moneyPool + insertMoney);
                 break;
             } else if (i == acceptedDenominators.length - 1) { // Did not find matching currency at the end of the array
-                // Placeholder for returning the item to the user
+                System.out.println("Machine did not recognize your currency"); // Placeholder for returning the item to the user
             }
         }
     }
 
-    public Product request(int productNumber) { //Buy a Product
-    }
+//    public Product request(int productNumber) { //Buy a Product
+//    }
 
     public int endSession() { //Returns change and resets the deposit pool
         int changeMoney = moneyPool;
         setMoneyPool(0);
-        return changeMoney;
+        return changeMoney; // Kind of lazy approach. Might consider counting returned money and return appropriate denominators
     }
 
     String getDescription(int productNumber) { //View a product description
+        return soldProducts[productNumber-1].examine();
     }
 
     public int getBalance() { //Returns the deposit pool amount
         return moneyPool;
     } // Note to self: Duplicate of getMoneyPool()?
 
-    String[] getProducts() { //Returns all Products' names and product numbers
-    }
+//    String[] getProducts() { //Returns all Products' names and product numbers
+//
+//    }
 
 }
 

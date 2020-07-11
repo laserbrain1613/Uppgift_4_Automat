@@ -44,7 +44,6 @@ public abstract class Product { // Note to self, what do all products have in co
         summary += ("Quantity in stock: " + getQuantityInStock());
         summary += ("Item price " + getItemPrice());
         return summary;
-
     }
 
 }

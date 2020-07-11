@@ -7,7 +7,7 @@ public class Beer extends Product { // Note to self: What unique traits does thi
     private String manufacturer;
     private String description;
     private boolean isACan; // false makes it a bottle
-    int volume;
+    private int volume;
 
     public Beer(String itemName, int quantityInStock, int itemPrice, String beerType, double alcoholByVolume, String manufacturer, String description, boolean isACan, int volume) {
         super(itemName, quantityInStock, itemPrice);

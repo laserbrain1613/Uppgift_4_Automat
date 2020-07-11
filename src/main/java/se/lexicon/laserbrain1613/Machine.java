@@ -1,5 +1,8 @@
 package se.lexicon.laserbrain1613;
 
+import se.lexicon.laserbrain1613.Product;
+import se.lexicon.laserbrain1613.Beer;
+
 public class Machine {
     //Fields
     private int moneyPool;
@@ -11,7 +14,6 @@ public class Machine {
     public int getMoneyPool() {
         return moneyPool;
     }
-
     public void setMoneyPool(int moneyPool) {
         this.moneyPool = moneyPool;
     }
@@ -27,16 +29,13 @@ public class Machine {
         }
     }
 
-//    public Product request(int productNumber) { //Buy a Product
-//    }
-
     public int endSession() { //Returns change and resets the deposit pool
         int changeMoney = moneyPool;
         setMoneyPool(0);
         return changeMoney; // Kind of lazy approach. Might consider counting returned money and return appropriate denominators
     }
 
-    String getDescription(int productNumber) { //View a product description
+    public String getDescription(int productNumber) { //View a product description
         return soldProducts[productNumber-1].examine();
     }
 
@@ -44,9 +43,19 @@ public class Machine {
         return moneyPool;
     } // Note to self: Duplicate of getMoneyPool()?
 
-//    String[] getProducts() { //Returns all Products' names and product numbers
-//
+
+
+//    @Override
+//    public String[] getProducts() { //Returns all Products' names and product numbers
+//        return new String[0];
 //    }
+//
+//    @Override
+//    public Product request(int productNumber) {
+//        return null;
+//    }
+
+
 
 }
 

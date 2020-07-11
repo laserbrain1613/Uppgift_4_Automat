@@ -1,13 +1,14 @@
 package se.lexicon.laserbrain1613;
 
-public class Product { // Note to self, what do all products have in common?
-    private final int productId;
+public abstract class Product { // Note to self, what do all products have in common?
+    private static int productId = 1;
+
     private String itemName;
     private int quantityInStock;
     private int itemPrice;
 
-    public Product(int productId, String itemName, int quantityInStock, int itemPrice) {
-        this.productId = ProductIdSequencer.nextProductId();
+    public Product(String itemName, int quantityInStock, int itemPrice) {
+        productId = productId++;
         this.itemName = itemName;
         this.quantityInStock = quantityInStock;
         this.itemPrice = itemPrice;
@@ -45,4 +46,5 @@ public class Product { // Note to self, what do all products have in common?
         return summary;
 
     }
+
 }

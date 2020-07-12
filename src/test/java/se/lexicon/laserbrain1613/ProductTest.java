@@ -4,24 +4,28 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import se.lexicon.laserbrain1613.Product;
 
 public class ProductTest {
     private Product pro;
+    private final String name = "Test Name";
+    private final int quantity = 5;
+    private final int price = 20;
 
     @Before
     public void setUp() {
-        pro = new Product("Test", 5, 20);
+        pro = new Product(name, quantity, price);
     }
 
-    @After
-    public void reset() {
-        pro.resetCounter();
-    }
+//    @After
+//    public void startOver() {
+//        pro = null;
+//    }
 
     @Test
     public void testConstructor() {
-        assertEquals(1, pro.getProductId());
-        assertEquals("Test", pro.getItemName());
+        //assertEquals(1, pro.getProductId());
+        assertEquals("Test Name", pro.getItemName());
         assertEquals(5, pro.getQuantityInStock());
         assertEquals(20, pro.getItemPrice());
     }
@@ -30,14 +34,12 @@ public class ProductTest {
     public void productId_increase() {
         //Arrange
         int firstValue = pro.getProductId();
-        pro = new Product("Test1", 10, 40);
+        pro = new Product("Test1", 10, 40); // Pretends that we create new objects for the Machine array
         int secondValue = pro.getProductId();
-        pro = new Product("Test2", 20, 80);
+        pro = new Product("Test2", 20, 80); // Pretends that we create new objects for the Machine array
 
         //Assert
-        assertEquals(1, firstValue);
-        assertEquals(2, secondValue);
-        assertEquals(3, pro.getProductId());
+        assertTrue((firstValue != secondValue) && (firstValue != pro.getProductId()));
     }
 
     @Test
@@ -47,7 +49,7 @@ public class ProductTest {
 
         //Assert
         assertTrue(str.contains("--- Product details ---"));
-        assertTrue(str.contains("Product Id: 1"));
+        assertTrue(str.contains("Product Id:"));
         assertTrue(str.contains("Item name: Test"));
         assertTrue(str.contains("Quantity in stock: 5"));
         assertTrue(str.contains("Item price 20"));
@@ -61,10 +63,23 @@ public class ProductTest {
         pro.setItemPrice(100);
 
         //Assert
-        assertEquals(1, pro.getProductId());
+        //assertEquals(1, pro.getProductId());
         assertEquals("New Name", pro.getItemName());
         assertEquals(50, pro.getQuantityInStock());
         assertEquals(100, pro.getItemPrice());
+    }
+
+    @Test
+    public void checkUse() {
+        //Arrange
+        int oldQuantity = pro.getQuantityInStock();
+
+        //Act
+        String returnValue = pro.use();
+
+        //Assert
+        assertEquals(oldQuantity-1, pro.getQuantityInStock());
+        assertEquals("You have received a Test Name from the machine.", returnValue);
     }
 
 

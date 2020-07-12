@@ -25,7 +25,7 @@ public class BeerTest {
     @Test
     public void checkConstructor() {
         //Assert
-        assertEquals(1, beer.getProductId());
+        assertTrue(beer.getProductId() > 0);
         assertEquals("Test Beer", beer.getItemName());
         assertEquals(10, beer.getQuantityInStock());
         assertEquals(20, beer.getItemPrice());
@@ -40,6 +40,7 @@ public class BeerTest {
     @Test
     public void checkSetters() {
         //Arrange
+        int productId = beer.getProductId();
         beer.setItemName("New Name");
         beer.setQuantityInStock(5);
         beer.setItemPrice(10);
@@ -51,7 +52,7 @@ public class BeerTest {
         beer.setVolume(500);
 
         //Assert
-        assertEquals(1, beer.getProductId());
+        assertEquals(productId, beer.getProductId());
         assertEquals("New Name", beer.getItemName());
         assertEquals(5, beer.getQuantityInStock());
         assertEquals(10, beer.getItemPrice());
@@ -68,6 +69,8 @@ public class BeerTest {
         //Act
         String str = beer.examine();
 
+        //Assert
+        assertTrue(beer.getProductId() > 0);
         assertTrue(str.contains("--- Item description ---"));
         assertTrue(str.contains("Container Type: Can"));
         assertTrue(str.contains("Beer Type: IPA"));
@@ -80,12 +83,14 @@ public class BeerTest {
     @Test
     public void checkExamineStringAfterChange() {
         //Arrange
+        int productId = beer.getProductId();
         beer.setDescription("Tastes mediocre");
 
         //Act
         String str = beer.examine();
 
         //Assert
+        assertEquals(productId, beer.getProductId());
         assertFalse(str.contains("Description: Tastes really good"));
         assertTrue(str.contains("Description: Tastes mediocre"));
     }

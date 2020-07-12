@@ -3,7 +3,7 @@ package se.lexicon.laserbrain1613;
 public class Machine {
     //Fields
     private int moneyPool;
-    private final Product[] soldProducts = new Product[10]; // Assuming this machine has 10 sell slots, but I won't fill all of them
+    private final Product[] inventoryArray = new Product[10]; // Assuming this machine has 10 sell slots, but I won't fill all of them
     private final int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
 
     //Getters and setters
@@ -21,7 +21,7 @@ public class Machine {
                 setMoneyPool(moneyPool + insertMoney);
                 break;
             } else if (i == acceptedDenominators.length - 1) { // Did not find matching currency at the end of the array
-                // Placeholder for returning the item to the user
+                break; // Placeholder for returning the item to the user (returning a boolean would've been more preferable)
             }
         }
     }
@@ -29,11 +29,11 @@ public class Machine {
     public int endSession() { //Returns change and resets the deposit pool
         int changeMoney = moneyPool;
         setMoneyPool(0);
-        return changeMoney; // Kind of lazy approach. Might consider counting returned money and return appropriate denominators
+        return changeMoney; // Kind of a lazy approach. A vendor machine must count which and how many denominators to return
     }
 
     public String getDescription(int productNumber) { //View a product description
-        return soldProducts[productNumber - 1].examine();
+        return inventoryArray[productNumber - 1].examine();
     }
 
     public int getBalance() { //Returns the deposit pool amount
@@ -41,20 +41,20 @@ public class Machine {
     } // Note to self: Duplicate of getMoneyPool()?
 
     public String[] getProducts() { //Returns all Products' names and product numbers
-        String[] temp = new String[soldProducts.length];
-        for (int i = 0; i < soldProducts.length; i++) {
-            String str = soldProducts[i].getProductId() + soldProducts[i].getItemName();
+        String[] temp = new String[inventoryArray.length];
+        for (int i = 0; i < inventoryArray.length; i++) {
+            String str = inventoryArray[i].getProductId() + inventoryArray[i].getItemName();
             temp[i] = str;
         }
         return temp;
     }
 
     public Product request(int productNumber) {
-        if (soldProducts[productNumber - 1].getQuantityInStock() > 0) { // Can't buy an item that isn't stocked
-            if (moneyPool >= soldProducts[productNumber - 1].getItemPrice()) {
-                setMoneyPool(getBalance() - soldProducts[productNumber - 1].getItemPrice()); // Deducts cost from balance
-                soldProducts[productNumber - 1].setQuantityInStock(soldProducts[productNumber - 1].getQuantityInStock() - 1); // One less item in the machine
-                return soldProducts[productNumber - 1]; // Roleplaying!
+        if (inventoryArray[productNumber - 1].getQuantityInStock() > 0) { // Can't buy an item that isn't stocked
+            if (moneyPool >= inventoryArray[productNumber - 1].getItemPrice()) {
+                setMoneyPool(getBalance() - inventoryArray[productNumber - 1].getItemPrice()); // Deducts cost from balance
+                String verification = inventoryArray[productNumber - 1].use(); //use / consume the product. (Return String)
+                return inventoryArray[productNumber - 1];
             } else {
                 return null; // Not enough money
             }

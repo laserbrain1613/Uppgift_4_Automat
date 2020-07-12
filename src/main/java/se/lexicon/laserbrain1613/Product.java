@@ -46,8 +46,9 @@ public class Product { // Note to self, what do all products have in common?
         return summary;
     }
 
-    public void resetCounter() {
-        productId = 0;
-    }
+    public String use() { // use / consume the product. (Return String)
+        setQuantityInStock(getQuantityInStock() - 1); // One less item in the machine
+        return ("You have received a " + itemName + " from the machine."); //It would make more sense to return this (Product)
+        }
 
 }

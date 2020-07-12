@@ -58,7 +58,7 @@ public class Beer extends Product { // Note to self: What unique traits does thi
 
     @Override
     public String examine() { //show product info. For example, price, name, calories, allergens, etc. (Return String)
-        String summary = "";
+        String summary = ""; // Note to self: This looks neater than StringBuilder append, append, append ..
         summary += ("--- Item description ---\n");
         summary += ("Container Type: " + ( isACan() ? "Can" : "Bottle" ) + "\n");
         summary += ("Beer Type: " + getBeerType() + "\n");

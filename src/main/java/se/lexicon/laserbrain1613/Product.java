@@ -1,41 +1,29 @@
 package se.lexicon.laserbrain1613;
 
-public class Product { // Note to self, what do all products have in common?
-    private static int productId = 0;
+public abstract class Product {
+    private static int counter = 0;
 
     private String itemName;
     private int quantityInStock;
     private int itemPrice;
+    private int productId;
 
     public Product(String itemName, int quantityInStock, int itemPrice) {
-        productId = ++productId;
+        this.productId = ++counter;
         this.itemName = itemName;
         this.quantityInStock = quantityInStock;
         this.itemPrice = itemPrice;
     }
 
-    public int getProductId() {
-        return productId;
-    }
-    public String getItemName() {
-        return itemName;
-    }
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-    public int getQuantityInStock() {
-        return quantityInStock;
-    }
-    public void setQuantityInStock(int quantityInStock) {
-        this.quantityInStock = quantityInStock;
-    }
-    public int getItemPrice() {
-        return itemPrice;
-    }
-    public void setItemPrice(int itemPrice) {
-        this.itemPrice = itemPrice;
-    }
+    public int getProductId() { return productId; }
+    public String getItemName() { return itemName; }
+    public void setItemName(String itemName) { this.itemName = itemName; }
+    public int getQuantityInStock() { return quantityInStock; }
+    public void setQuantityInStock(int quantityInStock) { this.quantityInStock = quantityInStock; }
+    public int getItemPrice() { return itemPrice; }
+    public void setItemPrice(int itemPrice) { this.itemPrice = itemPrice; }
 
+    // Assignment: Show product info. For example, price, name, calories, allergens, etc. (Return String)
     public String examine() {
         String summary = "";
         summary += ("--- Product details ---\n");
@@ -46,9 +34,10 @@ public class Product { // Note to self, what do all products have in common?
         return summary;
     }
 
-    public String use() { // use / consume the product. (Return String)
+    // Assignment: Use / consume the product. (Return String)
+    public String use() { //
         setQuantityInStock(getQuantityInStock() - 1); // One less item in the machine
-        return ("You have received a " + itemName + " from the machine."); //It would make more sense to return this (Product)
+        return ("You have received a " + itemName + " from the machine.");
         }
 
 }

@@ -70,7 +70,6 @@ public class BeerTest {
         String str = beer.examine();
 
         //Assert
-        assertTrue(beer.getProductId() > 0);
         assertTrue(str.contains("--- Item description ---"));
         assertTrue(str.contains("Container Type: Can"));
         assertTrue(str.contains("Beer Type: IPA"));
@@ -83,15 +82,12 @@ public class BeerTest {
     @Test
     public void checkExamineStringAfterChange() {
         //Arrange
-        int productId = beer.getProductId();
         beer.setDescription("Tastes mediocre");
 
         //Act
         String str = beer.examine();
 
         //Assert
-        assertEquals(productId, beer.getProductId());
-        assertFalse(str.contains("Description: Tastes really good"));
         assertTrue(str.contains("Description: Tastes mediocre"));
     }
 

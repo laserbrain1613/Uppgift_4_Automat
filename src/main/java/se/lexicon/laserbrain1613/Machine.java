@@ -1,58 +1,63 @@
 package se.lexicon.laserbrain1613;
 
-public class Machine {
-    //Fields
-    private int moneyPool;
+import java.util.Arrays;
+
+public class Machine implements IVendingMachine {
+    private int moneyPool = 0;
     private final Product[] inventoryArray = new Product[10]; // Assuming this machine has 10 sell slots, but I won't fill all of them
     private final int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
 
-    //Getters and setters
-    public int getMoneyPool() {
+    public int getBalance() {
         return moneyPool;
     }
-
-    public void setMoneyPool(int moneyPool) {
+    public void setBalance(int moneyPool) {
         this.moneyPool = moneyPool;
     }
 
-    public void addCurrency(int insertMoney) { //Add to the deposit pool (moneyPool)
+    // Assignment: View a product description
+    public String getDescription(int productNumber) {
+        if (productNumber > inventoryArray.length || inventoryArray[productNumber-1] == null) {
+            return "No product found on this index";
+        }
+        return inventoryArray[productNumber - 1].examine();
+    }
+
+    //Assignment: Add to the deposit pool (moneyPool)
+    public void addCurrency(int insertMoney) {
         for (int i = 0; i < acceptedDenominators.length; i++) {
             if (acceptedDenominators[i] == insertMoney) {
-                setMoneyPool(moneyPool + insertMoney);
+                setBalance(moneyPool + insertMoney);
                 break;
-            } else if (i == acceptedDenominators.length - 1) { // Did not find matching currency at the end of the array
-                break; // Placeholder for returning the item to the user (returning a boolean would've been more preferable)
+            } else if (i == acceptedDenominators.length - 1) { // Did not find matching currency
+                break; // Placeholder for returning the invalid item to the user
             }
         }
     }
 
-    public int endSession() { //Returns change and resets the deposit pool
-        int changeMoney = moneyPool;
-        setMoneyPool(0);
-        return changeMoney; // Kind of a lazy approach. A vendor machine must count which and how many denominators to return
+    // Assignment: Returns change and resets the deposit pool
+    public int endSession() {
+        int changeMoney = getBalance();
+        setBalance(0);
+        return changeMoney; // Kind of a lazy approach. Machine should split up change money in proper denominators
     }
 
-    public String getDescription(int productNumber) { //View a product description
-        return inventoryArray[productNumber - 1].examine();
-    }
-
-    public int getBalance() { //Returns the deposit pool amount
-        return moneyPool;
-    } // Note to self: Duplicate of getMoneyPool()?
-
-    public String[] getProducts() { //Returns all Products' names and product numbers
-        String[] temp = new String[inventoryArray.length];
-        for (int i = 0; i < inventoryArray.length; i++) {
-            String str = inventoryArray[i].getProductId() + inventoryArray[i].getItemName();
-            temp[i] = str;
+    // Assignment: Returns all Products' names and product numbers
+    public String[] getProducts() {
+        String[] temp = new String[0];
+        for (Product product : inventoryArray) {
+            if (product != null) {
+                temp = Arrays.copyOf(temp, temp.length + 1);
+                temp[temp.length - 1] = (product.getProductId() + "\t" + product.getItemName());
+            }
         }
         return temp;
     }
 
+    //Assignment: Buy a Product.
     public Product request(int productNumber) {
         if (inventoryArray[productNumber - 1].getQuantityInStock() > 0) { // Can't buy an item that isn't stocked
             if (moneyPool >= inventoryArray[productNumber - 1].getItemPrice()) {
-                setMoneyPool(getBalance() - inventoryArray[productNumber - 1].getItemPrice()); // Deducts cost from balance
+                setBalance(getBalance() - inventoryArray[productNumber - 1].getItemPrice()); // Deducts cost from balance
                 String verification = inventoryArray[productNumber - 1].use(); //use / consume the product. (Return String)
                 return inventoryArray[productNumber - 1];
             } else {
@@ -62,15 +67,17 @@ public class Machine {
         return null; // Out of stock
     }
 
+    public void replenishMachine() {
+        inventoryArray[0] = new Beer("Test Beer", 10, 20, "IPA", 6.5, "TestBrew Corporation", "Tastes really good", true, 330);
+        inventoryArray[1] = new Beer("Fine Beer", 12, 25, "DIPA", 7.2, "FineBrew Corporation", "Great Taste", false, 500);
+        inventoryArray[2] = new Beer("Extends", 1, 79, "Imperial Oatmeal Stout", 11.5, "Nerdbrewing", "Try it to believe it", true, 330);
+        inventoryArray[3] = new Sweets("Lollipop", 19, 15, "Candy", 5, true, true);
+        inventoryArray[4] = new Sweets("Marabou Mjölkchoklad", 0, 18, "Chocolate", 9, true, false);
+        inventoryArray[5] = new Sweets("Guylian Stevia Dark Chocolate", 11, 23, "Chocolate", 7, false, false);
+        inventoryArray[6] = new Fruits("Banana", 8, 12, "Mildly sweet", "Yellow", 4, false);
+        inventoryArray[7] = new Fruits("Tomato", 12, 18, "Semi-sweet", "Red", 5, true);
+        inventoryArray[8] = new Fruits("Apple", 4, 9, "Sweet", "Green", 5, false);
+        //Leaving array index 9 empty on purpose
+    }
+
 }
-
-
-// Don't know how to compare enum to String, using array for now
-// public enum acceptedDenominations { ONE, TWO, FIVE, TEN, TWENTY, FIFTY, ONEHUNDRED, TWOHUNDRED, FIVEHUNDRED, ONETHOUSAND;}
-
-// Another solution, but doesn't account for a failed attempt
-//        for (int compare : acceptedDenominators) {
-//                if (compare == insertMoney) {
-//                setMoneyPool(moneyPool + insertMoney);
-//                break;
-//                }

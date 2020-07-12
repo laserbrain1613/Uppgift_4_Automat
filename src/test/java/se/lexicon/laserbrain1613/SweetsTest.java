@@ -45,7 +45,7 @@ public class SweetsTest {
         sweets.setPlastic(false);
 
         //Assert
-        assertTrue(sweets.getProductId() > 0);
+        assertEquals(productId, sweets.getProductId());
         assertEquals("New Name", sweets.getItemName());
         assertEquals(5, sweets.getQuantityInStock());
         assertEquals(10, sweets.getItemPrice());
@@ -61,7 +61,6 @@ public class SweetsTest {
         String str = sweets.examine();
 
         //Assert
-        assertTrue(sweets.getProductId() > 0);
         assertTrue(str.contains("--- Item description ---"));
         assertTrue(str.contains("Sweet Category: Cake"));
         assertTrue(str.contains("Weight: 10"));
@@ -72,15 +71,12 @@ public class SweetsTest {
     @Test
     public void checkExamineStringAfterChange() {
         //Arrange
-        int productId = sweets.getProductId();
         sweets.setCategory("A New Category");
 
         //Act
         String str = sweets.examine();
 
         //Assert
-        assertEquals(productId, sweets.getProductId());
-        assertFalse(str.contains("Cake"));
         assertTrue(str.contains("A New Category"));
     }
 

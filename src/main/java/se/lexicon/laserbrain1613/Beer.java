@@ -1,6 +1,6 @@
 package se.lexicon.laserbrain1613;
 
-public class Beer extends Product { // Note to self: What unique traits does this product have?
+public class Beer extends Product {
 
     private String beerType; // Stout, IPA or whatever
     private double alcoholByVolume;
@@ -19,46 +19,22 @@ public class Beer extends Product { // Note to self: What unique traits does thi
         this.volume = volume;
     }
 
-    public String getBeerType() {
-        return beerType;
-    }
-    public void setBeerType(String beerType) {
-        this.beerType = beerType;
-    }
-    public double getAlcoholByVolume() {
-        return alcoholByVolume;
-    }
-    public void setAlcoholByVolume(double alcoholByVolume) {
-        this.alcoholByVolume = alcoholByVolume;
-    }
-    public String getManufacturer() {
-        return manufacturer;
-    }
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public boolean isACan() {
-        return isACan;
-    }
-    public void setACan(boolean ACan) {
-        isACan = ACan;
-    }
-    public int getVolume() {
-        return volume;
-    }
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
+    public String getBeerType() { return beerType; }
+    public void setBeerType(String beerType) { this.beerType = beerType; }
+    public double getAlcoholByVolume() { return alcoholByVolume; }
+    public void setAlcoholByVolume(double alcoholByVolume) { this.alcoholByVolume = alcoholByVolume; }
+    public String getManufacturer() { return manufacturer; }
+    public void setManufacturer(String manufacturer) { this.manufacturer = manufacturer; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public boolean isACan() { return isACan; }
+    public void setACan(boolean ACan) { isACan = ACan; }
+    public int getVolume() { return volume; }
+    public void setVolume(int volume) { this.volume = volume; }
 
     @Override
     public String examine() { //show product info. For example, price, name, calories, allergens, etc. (Return String)
-        String summary = ""; // Note to self: This looks neater than StringBuilder append, append, append ..
+        String summary = ""; //
         summary += ("--- Item description ---\n");
         summary += ("Container Type: " + ( isACan() ? "Can" : "Bottle" ) + "\n");
         summary += ("Beer Type: " + getBeerType() + "\n");

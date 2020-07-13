@@ -36,8 +36,14 @@ public abstract class Product {
 
     // Assignment: Use / consume the product. (Return String)
     public String use() { //
-        setQuantityInStock(getQuantityInStock() - 1); // One less item in the machine
+        //setQuantityInStock(getQuantityInStock() - 1);
+        //quantityInStock--;
+        this.quantityInStock--;
         return ("You have received a " + itemName + " from the machine.");
         }
+
+    public String examineProduct() {
+        return this.examine();
+    }
 
 }

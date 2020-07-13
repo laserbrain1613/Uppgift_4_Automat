@@ -57,7 +57,6 @@ private Machine machine;
         assertEquals(0, machine.getBalance());
     }
 
-
     @Test
     public void getDescription_FoundEntry() {
         //Arrange
@@ -99,6 +98,9 @@ private Machine machine;
 
         //Assert
         assertEquals(9, str.length);
+        assertTrue(str[0].contains("Test Beer"));
+        assertTrue(str[3].contains("Lollipop"));
+        assertTrue(str[6].contains("Banana"));
         }
 
     @Test
@@ -115,20 +117,89 @@ private Machine machine;
     }
 
     @Test
-    public void request() {
+    public void request_isWorking() {
+        //Arrange
+        machine.setBalance(Integer.MAX_VALUE);
+        int oldBalance = machine.getBalance();
+
+        //Act
+        Product pro = machine.request(1);
+
+        //Assert
+        assertEquals(oldBalance - pro.getItemPrice(), machine.getBalance());
+        assertNotNull(pro);
+    }
+
+    @Test
+    public void request_isWorkingExactPoolAmount() {
+        //Arrange
+        machine.setBalance(20);
+        int oldBalance = machine.getBalance();
+
+        //Act
+        Product pro = machine.request(1); // Item costs 20
+
+        //Assert
+        assertEquals(0, machine.getBalance());
+        assertNotNull(pro);
+    }
+
+    @Test
+    public void request_NotEnoughMoney() {
+        //Arrange
+        machine.setBalance(19);
+
+        //Act
+        Product pro = machine.request(1); // Item costs 20. Can't buy
+
+        //Assert
+        assertEquals(19, machine.getBalance());
+        assertNull(pro);
+    }
+
+    @Test
+    public void request_OutOfStock () {
+        //Arrange
+        machine.setBalance(Integer.MAX_VALUE);
+
+        //Act
+        Product pro = machine.request(5); //
+
+        //Assert
+        assertEquals(Integer.MAX_VALUE, machine.getBalance());
+        assertNull(pro);
+    }
+
+    @Test
+    public void request_ProductDoesNotExist() {
+        //Arrange
+        machine.setBalance(Integer.MAX_VALUE);
+
+        //Act
+        Product pro = machine.request(10); // Index 9 is empty (no product has been loaded)
+
+        //Assert
+        assertEquals(Integer.MAX_VALUE, machine.getBalance());
+        assertNull(pro);
+    }
+
+    @Test
+    public void request_ArrayOutOfBounds() {
+        //Arrange
+        machine.setBalance(Integer.MAX_VALUE);
+
+        //Act
+        Product pro = machine.request(Integer.MAX_VALUE); // Out of range, array index is between 0-9 (10 elements)
+
+        //Assert
+        assertEquals(Integer.MAX_VALUE, machine.getBalance());
+        assertNull(pro);
+    }
+
+    @Test
+    public void request_BuyMoreItems() {
 
     }
 
-    /*
-    Scenarios:
-    - Tries to buy a product that doesn't exist
-    - Item is out of stock
-    - Doesn't have enough money
-    - Buys for exactly the pool amount
-    - Wants to buy more items
-
-    Check moneyPool in all scenarios
-    Check return Product (actual Product or null)
-     */
 
 }

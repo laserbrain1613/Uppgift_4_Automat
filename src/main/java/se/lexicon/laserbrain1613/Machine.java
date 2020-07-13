@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Machine implements IVendingMachine {
     private int moneyPool = 0;
-    private final Product[] inventoryArray = new Product[10]; // Assuming this machine has 10 sell slots, but I won't fill all of them
+    private final Product[] inventoryArray = new Product[10]; // Reflection: In real life, this array would have to be two-dimensional (amount of slots * stored products in each slot)
     private final int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
 
     public int getBalance() {
@@ -38,7 +38,7 @@ public class Machine implements IVendingMachine {
     public int endSession() {
         int changeMoney = getBalance();
         setBalance(0);
-        return changeMoney; // Kind of a lazy approach. Machine should split up change money in proper denominators
+        return changeMoney; // Reflection: Kind of a lazy approach. Machine should split up change money in proper denominators
     }
 
     // Assignment: Returns all Products' names and product numbers
@@ -53,18 +53,16 @@ public class Machine implements IVendingMachine {
         return temp;
     }
 
-    //Assignment: Buy a Product.
+    //Assignment: Buy a Product. Note to self: Very very important that array test goes first
     public Product request(int productNumber) {
-        if (inventoryArray[productNumber - 1].getQuantityInStock() > 0) { // Can't buy an item that isn't stocked
-            if (moneyPool >= inventoryArray[productNumber - 1].getItemPrice()) {
-                setBalance(getBalance() - inventoryArray[productNumber - 1].getItemPrice()); // Deducts cost from balance
-                String verification = inventoryArray[productNumber - 1].use(); //use / consume the product. (Return String)
-                return inventoryArray[productNumber - 1];
-            } else {
-                return null; // Not enough money
-            }
-        }
-        return null; // Out of stock
+        if (productNumber > inventoryArray.length) { return null; } // Tried to buy product greater than machine slot size
+        if (inventoryArray[productNumber-1] == null) { return null; } // Slot hasn't been stocked at all with a product
+        if (inventoryArray[productNumber - 1].getQuantityInStock() == 0) { return null; } // Out of stock
+        if (moneyPool < inventoryArray[productNumber - 1].getItemPrice()) { return null; } // Can't afford item
+
+        setBalance(getBalance() - inventoryArray[productNumber - 1].getItemPrice()); // Deducts cost from balance
+        String verification = inventoryArray[productNumber - 1].use(); //use / consume the product. (Return String)
+        return inventoryArray[productNumber - 1];
     }
 
     public void replenishMachine() {

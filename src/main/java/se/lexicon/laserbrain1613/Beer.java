@@ -45,4 +45,8 @@ public class Beer extends Product {
         return summary;
     }
 
+    public String SuperclassExamine() {
+        return super.examine();
+    }
+
 }

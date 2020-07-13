@@ -23,16 +23,15 @@ public class Sweets extends Product {
     public boolean isPlastic() { return usesPlastic; }
     public void setPlastic(boolean usesPlastic) { this.usesPlastic = usesPlastic; }
 
-
     //Assignment: Show product info. For example, price, name, calories, allergens, etc. (Return String)
     @Override
     public String examine() {
         String summary = "";
         summary += ("--- Item description ---\n");
-        summary += ("Sweet Category: " + getCategory() + "\n");
-        summary += ("Weight: " + getWeight() + "\n");
-        summary += ("Has sugar: " + (hasSugar() ? "Yes" : "No") + "\n");
-        summary += ("Container type: " + (isPlastic() ? "Plastic" : "Carton") + "\n");
+        summary += ("Sweet Category: " + this.category + "\n");
+        summary += ("Weight: " + this.weight + "\n");
+        summary += ("Has sugar: " + (this.hasSugar ? "Yes" : "No") + "\n");
+        summary += ("Container type: " + (this.usesPlastic ? "Plastic" : "Carton") + "\n");
         return summary;
     }
 

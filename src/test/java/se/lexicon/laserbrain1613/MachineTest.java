@@ -117,7 +117,7 @@ private Machine machine;
     }
 
     @Test
-    public void request_isWorking() {
+    public void request_IsWorking() {
         //Arrange
         machine.setBalance(Integer.MAX_VALUE);
         int oldBalance = machine.getBalance();
@@ -131,10 +131,9 @@ private Machine machine;
     }
 
     @Test
-    public void request_isWorkingExactPoolAmount() {
+    public void request_IsWorkingExactPoolAmount() {
         //Arrange
         machine.setBalance(20);
-        int oldBalance = machine.getBalance();
 
         //Act
         Product pro = machine.request(1); // Item costs 20
@@ -189,15 +188,27 @@ private Machine machine;
         machine.setBalance(Integer.MAX_VALUE);
 
         //Act
-        Product pro = machine.request(Integer.MAX_VALUE); // Out of range, array index is between 0-9 (10 elements)
+        Product product = machine.request(Integer.MAX_VALUE); // Out of range, array index is between 0-9 (10 elements)
 
         //Assert
         assertEquals(Integer.MAX_VALUE, machine.getBalance());
-        assertNull(pro);
+        assertNull(product);
     }
 
     @Test
-    public void request_BuyMoreItems() {
+    public void request_BuyMoreItems() { // I admit this test is a bit unnecessary
+        //Arrange
+        machine.setBalance(Integer.MAX_VALUE);
+        int counter = 0;
+
+        //Act
+        for (int i = 1; i < 11 ; i++) {
+            Product product = machine.request(i);
+            counter += (product != null ? 1 : 0); // Won't buy from index 4 (out of stock) and 9 (null)
+        }
+
+        //Assert
+        assertEquals(8, counter);
 
     }
 

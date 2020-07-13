@@ -12,9 +12,9 @@ public class ProductTest {
 
     @Before
     public void setUp() {
-        product = new Beer("Test Beer", 10, 20, "IPA", 6.5, "TestBrew Corporation", "Tastes really good", true, 330);
-    }
+        product = new Product("Test Beer",5, 50) {};
 
+    }
     @Test
     public void use() {
         //Arrange
@@ -24,7 +24,7 @@ public class ProductTest {
         String str = product.use();
 
         //Assert
-        assertTrue(str.contains("You have received a Test Beer from the machine."));
+        assertTrue(str.contains("You have received 'Test Beer' from the machine."));
         assertEquals(oldQuantity-1, product.getQuantityInStock());
     }
 
@@ -47,6 +47,31 @@ public class ProductTest {
         assertTrue(product.getProductId() > 0); // Can't predict order of tests
     }
 
+    @Test
+    public void examine() {
+        //Arrange
+
+        //Act
+        String str = product.examine();
+
+        //Assert
+        assertTrue(str.contains("Product Id: 1"));
+        assertTrue(str.contains("Item name: Test Beer"));
+        assertTrue(str.contains("Quantity in stock: 5"));
+        assertTrue(str.contains("Item price 50"));
+    }
+
+    @Test
+    public void checkExamineAfterChange() {
+        //Arrange
+        product.setQuantityInStock(314);
+
+        //Act
+        String str = product.examine();
+
+        //Assert
+        assertTrue(str.contains("Quantity in stock: 314"));
+    }
 
 
 }

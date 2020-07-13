@@ -23,14 +23,15 @@ public class Fruits extends Product {
     public boolean isAVegetable() { return isAVegetable; }
     public void setAVegetable(boolean AVegetable) { isAVegetable = AVegetable; }
 
+    // Assignment: Show product info. For example, price, name, calories, allergens, etc. (Return String)
     @Override
-    public String examine() { //show product info. For example, price, name, calories, allergens, etc. (Return String)
+    public String examine() {
         String summary = "";
         summary += ("--- Item description ---\n");
-        summary += ("Flavor: " + getFlavor() + "\n");
-        summary += ("Color: " + getColor() + "\n");
-        summary += ("Weight: " + getWeight() + "\n");
-        summary += ("Is a vegetable: " + (isAVegetable() ? "Yes" : "No") + "\n");
+        summary += ("Flavor: " + this.flavor + "\n");
+        summary += ("Color: " + this.color + "\n");
+        summary += ("Weight: " + this.weight + "\n");
+        summary += ("Is a vegetable: " + (this.isAVegetable ? "Yes" : "No") + "\n");
         return summary;
     }
 }

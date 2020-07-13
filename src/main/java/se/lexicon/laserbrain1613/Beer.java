@@ -2,7 +2,7 @@ package se.lexicon.laserbrain1613;
 
 public class Beer extends Product {
 
-    private String beerType; // Stout, IPA or whatever
+    private String beerType;
     private double alcoholByVolume;
     private String manufacturer;
     private String description;
@@ -32,21 +32,19 @@ public class Beer extends Product {
     public int getVolume() { return volume; }
     public void setVolume(int volume) { this.volume = volume; }
 
+    // Assignment: Show product info. For example, price, name, calories, allergens, etc. (Return String)
     @Override
-    public String examine() { //show product info. For example, price, name, calories, allergens, etc. (Return String)
+    public String examine() {
         String summary = ""; //
         summary += ("--- Item description ---\n");
-        summary += ("Container Type: " + ( isACan() ? "Can" : "Bottle" ) + "\n");
-        summary += ("Beer Type: " + getBeerType() + "\n");
-        summary += ("Volume in ml: " + getVolume() + "\n");
-        summary += ("Alcohol by volume: " + getAlcoholByVolume() + "\n");
-        summary += ("Manufacturer: " + getManufacturer() + "\n");
-        summary += ("Description: " + getDescription() + "\n");
+        summary += ("Container Type: " + ( this.isACan ? "Can" : "Bottle" ) + "\n");
+        summary += ("Beer Type: " + this.beerType + "\n");
+        summary += ("Volume in ml: " + this.volume + "\n");
+        summary += ("Alcohol by volume: " + this.alcoholByVolume + "\n");
+        summary += ("Manufacturer: " + this.manufacturer + "\n");
+        summary += ("Description: " + this.description + "\n");
         return summary;
     }
 
-    public String SuperclassExamine() {
-        return super.examine();
-    }
 
 }

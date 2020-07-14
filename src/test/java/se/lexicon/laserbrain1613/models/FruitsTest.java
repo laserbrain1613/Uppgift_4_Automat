@@ -1,22 +1,22 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class FruitsTest {
+
     private Fruits fruits;
-    private final String name = "Banana";
-    private final int quantity = 8;
-    private final int price = 12;
-    private String flavor = "Mildly sweet";
-    private String color = "Yellow";
-    private int weight = 4;
-    private boolean isAVegetable = false;
 
     @Before
     public void setUp() {
+        final String name = "Banana";
+        final int quantity = 8;
+        final int price = 12;
+        final String flavor = "Mildly sweet";
+        final String color = "Yellow";
+        final int weight = 4;
+        final  boolean isAVegetable = false;
         fruits = new Fruits(name, quantity, price, flavor, color, weight, isAVegetable);
     }
 
@@ -80,6 +80,5 @@ public class FruitsTest {
         //Assert
         assertTrue(str.contains("Is a vegetable: Yes"));
     }
-
 
 }

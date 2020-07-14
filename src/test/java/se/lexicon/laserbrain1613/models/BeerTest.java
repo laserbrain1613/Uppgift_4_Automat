@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,19 +7,19 @@ import static org.junit.Assert.*;
 public class BeerTest {
 
     private Beer beer;
-    private final String name = "Test Beer";
-    private final int quantity = 10;
-    private final int price = 20;
-    private final String type = "IPA";
-    private final double abv = 6.5;
-    private final String manufacturer = "TestBrew Corporation";
-    private final String description = "Tastes really good";
-    private final boolean isCan = true;
-    private final int volume = 330;
 
     @Before
     public void setUp() {
-        beer = new Beer(name, quantity, price, type, abv, manufacturer, description,isCan, volume);
+        final String name = "Test Beer";
+        final int quantity = 10;
+        final int price = 20;
+        final String type = "IPA";
+        final double abv = 6.5;
+        final String manufacturer = "TestBrew Corporation";
+        final String description = "Tastes really good";
+        final boolean isCan = true;
+        final int volume = 330;
+        beer = new Beer(name, quantity, price, type, abv, manufacturer, description, isCan, volume);
     }
 
     @Test

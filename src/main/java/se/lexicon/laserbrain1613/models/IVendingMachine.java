@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 public interface IVendingMachine {
 

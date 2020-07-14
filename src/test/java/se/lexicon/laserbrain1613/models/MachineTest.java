@@ -1,13 +1,13 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 import org.junit.Before;
 import org.junit.Test;
-import sun.awt.SunHints;
-
+import se.lexicon.laserbrain1613.Machine;
 import static org.junit.Assert.*;
 
 public class MachineTest {
-private Machine machine;
+
+    private Machine machine;
 
     @Before
     public void setUp()  {
@@ -30,12 +30,12 @@ private Machine machine;
     @Test
     public void addCurrencyValidDenominators() {
         //Arrange
-        int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000}; // Adds up to 1888
+        int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
         int result =0;
 
         //Act
         for (int sum : acceptedDenominators) {
-            result += sum;
+            result += sum; // Adds up to 1888
             machine.addCurrency(sum);
         }
 
@@ -73,7 +73,7 @@ private Machine machine;
     @Test
     public void getDescription_EmptyIndex() {
         //Arrange
-        String str = machine.getDescription(10);
+        String str = machine.getDescription(10); // Index 9 in the array was left empty on purpose
 
         //Assert
         assertTrue(str.contains("No product found on this index"));
@@ -82,7 +82,7 @@ private Machine machine;
     @Test
     public void getDescription_IndexOutOfBounds() {
         //Arrange
-        String str = machine.getDescription(Integer.MAX_VALUE);
+        String str = machine.getDescription(11); // Index 10 does not exist
 
         //Assert
         assertTrue(str.contains("No product found on this index"));
@@ -127,6 +127,7 @@ private Machine machine;
 
         //Assert
         assertEquals(oldBalance - pro.getItemPrice(), machine.getBalance());
+        assertSame("Test Beer", pro.getItemName());
         assertNotNull(pro);
     }
 
@@ -149,7 +150,7 @@ private Machine machine;
         machine.setBalance(19);
 
         //Act
-        Product pro = machine.request(1); // Item costs 20. Can't buy
+        Product pro = machine.request(1); // Item costs 20, can't afford it
 
         //Assert
         assertEquals(19, machine.getBalance());
@@ -162,7 +163,7 @@ private Machine machine;
         machine.setBalance(Integer.MAX_VALUE);
 
         //Act
-        Product pro = machine.request(5); //
+        Product pro = machine.request(5);
 
         //Assert
         assertEquals(Integer.MAX_VALUE, machine.getBalance());
@@ -175,7 +176,7 @@ private Machine machine;
         machine.setBalance(Integer.MAX_VALUE);
 
         //Act
-        Product pro = machine.request(10); // Index 9 is empty (no product has been loaded)
+        Product pro = machine.request(10); // Index 9 is empty (no object within)
 
         //Assert
         assertEquals(Integer.MAX_VALUE, machine.getBalance());
@@ -211,6 +212,5 @@ private Machine machine;
         assertEquals(8, counter);
 
     }
-
 
 }

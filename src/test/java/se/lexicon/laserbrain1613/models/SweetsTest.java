@@ -1,21 +1,22 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SweetsTest {
-    private final String name = "Test Sweets";
-    private final int quantity = 10;
-    private final int price = 20;
-    private final String category = "Cake";
-    private final int weight = 10;
-    private final boolean hasSugar = true;
-    private final boolean usesPlastic = true;
+
     private Sweets sweets;
 
     @Before
     public void setUp() {
+        final String name = "Test Sweets";
+        final int quantity = 10;
+        final int price = 20;
+        final String category = "Cake";
+        final int weight = 10;
+        final boolean hasSugar = true;
+        final boolean usesPlastic = true;
         sweets = new Sweets(name, quantity, price, category, weight, hasSugar, usesPlastic);
     }
 

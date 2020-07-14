@@ -1,8 +1,7 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -12,9 +11,10 @@ public class ProductTest {
 
     @Before
     public void setUp() {
-        product = new Product("Test Beer",5, 50) {};
+        product = new Product("Test Beer",5, 50) {}; // Creates Product without a child
 
     }
+
     @Test
     public void use() {
         //Arrange
@@ -49,8 +49,6 @@ public class ProductTest {
 
     @Test
     public void examine() {
-        //Arrange
-
         //Act
         String str = product.examine();
 
@@ -73,8 +71,4 @@ public class ProductTest {
         assertTrue(str.contains("Quantity in stock: 314"));
     }
 
-
 }
-
-
-

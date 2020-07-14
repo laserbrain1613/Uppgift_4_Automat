@@ -1,8 +1,9 @@
 package se.lexicon.laserbrain1613;
-
+import se.lexicon.laserbrain1613.models.*;
 import java.util.Arrays;
 
 public class Machine implements IVendingMachine {
+
     private int moneyPool = 0;
     private final Product[] inventoryArray = new Product[10]; // Reflection: In real life, this array would have to be two-dimensional (amount of slots * stored products in each slot)
     private final int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
@@ -16,7 +17,7 @@ public class Machine implements IVendingMachine {
 
     // Assignment: View a product description
     public String getDescription(int productNumber) {
-        if (productNumber > this.inventoryArray.length || this.inventoryArray[productNumber-1] == null) {
+        if (productNumber > this.inventoryArray.length || this.inventoryArray[productNumber-1] == null) { // If product slot is either out of machine range or empty
             return "No product found on this index";
         }
         return this.inventoryArray[productNumber - 1].examine();
@@ -38,7 +39,7 @@ public class Machine implements IVendingMachine {
     public int endSession() {
         int changeMoney = this.moneyPool;
         this.moneyPool = 0;
-        return changeMoney; // Reflection: Kind of a lazy approach. Machine should split up change money in proper denominators
+        return changeMoney; // Reflection: Kind of a lazy approach. Machine should split up change money into proper denominators
     }
 
     // Assignment: Returns all Products' names and product numbers
@@ -53,7 +54,7 @@ public class Machine implements IVendingMachine {
         return temp;
     }
 
-    //Assignment: Buy a Product. Note to self: Very very important that array test goes first
+    //Assignment: Buy a Product. Note to self: Very very important that the array test goes first (or other checks might crash)
     public Product request(int productNumber) {
         if (productNumber > this.inventoryArray.length) { return null; } // Tried to buy product greater than machine slot size
         if (this.inventoryArray[productNumber-1] == null) { return null; } // Slot hasn't been stocked at all with a product

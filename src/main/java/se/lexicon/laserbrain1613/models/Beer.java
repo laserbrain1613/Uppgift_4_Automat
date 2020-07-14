@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 public class Beer extends Product {
 
@@ -45,6 +45,5 @@ public class Beer extends Product {
         summary += ("Description: " + this.description + "\n");
         return summary;
     }
-
 
 }

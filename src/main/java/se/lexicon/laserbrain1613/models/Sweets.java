@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 public class Sweets extends Product {
     private String category;
@@ -34,6 +34,5 @@ public class Sweets extends Product {
         summary += ("Container type: " + (this.usesPlastic ? "Plastic" : "Carton") + "\n");
         return summary;
     }
-
 
 }

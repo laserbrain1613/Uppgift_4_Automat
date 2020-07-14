@@ -1,12 +1,13 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 public abstract class Product {
+
     private static int counter = 0;
 
     private String itemName;
     private int quantityInStock;
     private int itemPrice;
-    private int productId;
+    private final int productId;
 
     public Product(String itemName, int quantityInStock, int itemPrice) {
         this.productId = ++counter;
@@ -39,6 +40,5 @@ public abstract class Product {
         this.quantityInStock--;
         return ("You have received '" + this.itemName + "' from the machine.");
         }
-
 
 }

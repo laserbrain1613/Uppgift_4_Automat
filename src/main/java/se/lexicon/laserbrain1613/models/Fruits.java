@@ -1,4 +1,4 @@
-package se.lexicon.laserbrain1613;
+package se.lexicon.laserbrain1613.models;
 
 public class Fruits extends Product {
     private String flavor;
@@ -34,4 +34,5 @@ public class Fruits extends Product {
         summary += ("Is a vegetable: " + (this.isAVegetable ? "Yes" : "No") + "\n");
         return summary;
     }
+
 }

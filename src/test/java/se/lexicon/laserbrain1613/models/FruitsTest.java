@@ -7,16 +7,16 @@ import static org.junit.Assert.*;
 public class FruitsTest {
 
     private Fruits fruits;
+    final String name = "Banana";
+    final int quantity = 8;
+    final int price = 12;
+    final String flavor = "Mildly sweet";
+    final String color = "Yellow";
+    final int weight = 4;
+    final  boolean isAVegetable = false;
 
     @Before
     public void setUp() {
-        final String name = "Banana";
-        final int quantity = 8;
-        final int price = 12;
-        final String flavor = "Mildly sweet";
-        final String color = "Yellow";
-        final int weight = 4;
-        final  boolean isAVegetable = false;
         fruits = new Fruits(name, quantity, price, flavor, color, weight, isAVegetable);
     }
 
@@ -24,19 +24,18 @@ public class FruitsTest {
     public void checkConstructor() {
         //Assert
         assertTrue(fruits.getProductId() > 0);
-        assertEquals("Banana", fruits.getItemName());
-        assertEquals(8, fruits.getQuantityInStock());
-        assertEquals(12, fruits.getItemPrice());
-        assertEquals("Mildly sweet", fruits.getFlavor());
-        assertEquals("Yellow", fruits.getColor());
-        assertEquals(4, fruits.getWeight());
+        assertEquals(name, fruits.getItemName());
+        assertEquals(quantity, fruits.getQuantityInStock());
+        assertEquals(price, fruits.getItemPrice());
+        assertEquals(flavor, fruits.getFlavor());
+        assertEquals(color, fruits.getColor());
+        assertEquals(weight, fruits.getWeight());
         assertFalse(fruits.isAVegetable());
     }
 
     @Test
     public void checkSetters() {
         //Arrange
-        int productId = fruits.getProductId();
         fruits.setItemName("Tomato");
         fruits.setQuantityInStock(5);
         fruits.setItemPrice(14);
@@ -63,22 +62,10 @@ public class FruitsTest {
 
         //Assert
         assertTrue(fruits.getProductId() > 0);
-        assertTrue(str.contains("--- Item description ---"));
-        assertTrue(str.contains("Flavor: Mildly sweet"));
-        assertTrue(str.contains("Weight: 4"));
-        assertTrue(str.contains("Is a vegetable: No"));
-    }
-
-    @Test
-    public void checkExamineStringAfterChange() {
-        //Arrange
-        fruits.setAVegetable(true);
-
-        //Act
-        String str = fruits.examine();
-
-        //Assert
-        assertTrue(str.contains("Is a vegetable: Yes"));
+        assertTrue(str.contains(fruits.getFlavor()));
+        assertTrue(str.contains(fruits.getColor()));
+        assertTrue(str.contains(Integer.toString(fruits.getWeight())));
+        assertTrue(str.contains(fruits.isAVegetable() ? "Yes" : "No"));
     }
 
 }

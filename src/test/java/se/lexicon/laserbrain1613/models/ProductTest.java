@@ -59,16 +59,4 @@ public class ProductTest {
         assertTrue(str.contains("Item price 50"));
     }
 
-    @Test
-    public void checkExamineAfterChange() {
-        //Arrange
-        product.setQuantityInStock(314);
-
-        //Act
-        String str = product.examine();
-
-        //Assert
-        assertTrue(str.contains("Quantity in stock: 314"));
-    }
-
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Machine implements IVendingMachine {
 
     private int moneyPool = 0;
-    private final Product[] inventoryArray = new Product[10]; // Reflection: In real life, this array would have to be two-dimensional (amount of slots * stored products in each slot)
+    private final Product[] inventoryArray = new Product[10]; // Reflection: In real life, this array would have to be two-dimensional (amount of slots * capacity)
     private final int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
 
     public int getBalance() {

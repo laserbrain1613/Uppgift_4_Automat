@@ -7,16 +7,16 @@ import static org.junit.Assert.*;
 public class SweetsTest {
 
     private Sweets sweets;
+    final String name = "Test Sweets";
+    final int quantity = 10;
+    final int price = 20;
+    final String category = "Cake";
+    final int weight = 10;
+    final boolean hasSugar = true;
+    final boolean usesPlastic = true;
 
     @Before
     public void setUp() {
-        final String name = "Test Sweets";
-        final int quantity = 10;
-        final int price = 20;
-        final String category = "Cake";
-        final int weight = 10;
-        final boolean hasSugar = true;
-        final boolean usesPlastic = true;
         sweets = new Sweets(name, quantity, price, category, weight, hasSugar, usesPlastic);
     }
 
@@ -24,13 +24,13 @@ public class SweetsTest {
     public void checkConstructor() {
         //Assert
         assertTrue(sweets.getProductId() > 0);
-        assertEquals("Test Sweets", sweets.getItemName());
-        assertEquals(10, sweets.getQuantityInStock());
-        assertEquals(20, sweets.getItemPrice());
-        assertEquals("Cake", sweets.getCategory());
-        assertEquals(10, sweets.getWeight(), 0);
-        assertTrue(sweets.isPlastic());
-        assertTrue(sweets.hasSugar());
+        assertEquals(name, sweets.getItemName());
+        assertEquals(quantity, sweets.getQuantityInStock());
+        assertEquals(price, sweets.getItemPrice());
+        assertEquals(category, sweets.getCategory());
+        assertEquals(weight, sweets.getWeight(), 0);
+        assertSame(hasSugar, sweets.isPlastic());
+        assertEquals(usesPlastic, sweets.hasSugar());
     }
 
     @Test
@@ -62,23 +62,10 @@ public class SweetsTest {
         String str = sweets.examine();
 
         //Assert
-        assertTrue(str.contains("--- Item description ---"));
-        assertTrue(str.contains("Sweet Category: Cake"));
-        assertTrue(str.contains("Weight: 10"));
-        assertTrue(str.contains("Has sugar: Yes"));
-        assertTrue(str.contains("Container type: Plastic"));
-    }
-
-    @Test
-    public void checkExamineStringAfterChange() {
-        //Arrange
-        sweets.setCategory("A New Category");
-
-        //Act
-        String str = sweets.examine();
-
-        //Assert
-        assertTrue(str.contains("A New Category"));
+        assertTrue(str.contains(sweets.getCategory()));
+        assertTrue(str.contains(Integer.toString(sweets.getWeight())));
+        assertTrue(str.contains(sweets.hasSugar() ? "Yes" : "No"));
+        assertTrue(str.contains(sweets.isPlastic() ? "Plastic" : "Carton"));
     }
 
 }

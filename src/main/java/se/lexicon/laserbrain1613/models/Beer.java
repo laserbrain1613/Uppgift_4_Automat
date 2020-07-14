@@ -43,6 +43,9 @@ public class Beer extends Product {
         summary += ("Alcohol by volume: " + this.alcoholByVolume + "\n");
         summary += ("Manufacturer: " + this.manufacturer + "\n");
         summary += ("Description: " + this.description + "\n");
+
+
+
         return summary;
     }
 

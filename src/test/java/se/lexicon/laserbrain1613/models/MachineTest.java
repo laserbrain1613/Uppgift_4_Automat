@@ -12,7 +12,7 @@ public class MachineTest {
     @Before
     public void setUp()  {
         machine = new Machine();
-        machine.replenishMachine(); // Fills array with 9 objects
+        machine.replenishMachine(); // Fills array with 9 default objects
     }
 
     @Test
@@ -91,10 +91,9 @@ public class MachineTest {
     @Test
     public void getProducts() {
         //Arrange
-        String[] str;
 
         //Act
-        str = machine.getProducts(); // Our test machine has 10 slots of which 9 are filled
+        String[] str = machine.getProducts(); // Our test machine has 10 slots of which 9 are filled
 
         //Assert
         assertEquals(9, str.length);
@@ -210,7 +209,6 @@ public class MachineTest {
 
         //Assert
         assertEquals(8, counter);
-
     }
 
 }

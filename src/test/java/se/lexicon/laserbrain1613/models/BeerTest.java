@@ -7,18 +7,18 @@ import static org.junit.Assert.*;
 public class BeerTest {
 
     private Beer beer;
+    final String name = "Test Beer";
+    final int quantity = 10;
+    final int price = 20;
+    final String type = "IPA";
+    final double abv = 6.5;
+    final String manufacturer = "TestBrew Corporation";
+    final String description = "Tastes really good";
+    final boolean isCan = true;
+    final int volume = 330;
 
     @Before
     public void setUp() {
-        final String name = "Test Beer";
-        final int quantity = 10;
-        final int price = 20;
-        final String type = "IPA";
-        final double abv = 6.5;
-        final String manufacturer = "TestBrew Corporation";
-        final String description = "Tastes really good";
-        final boolean isCan = true;
-        final int volume = 330;
         beer = new Beer(name, quantity, price, type, abv, manufacturer, description, isCan, volume);
     }
 
@@ -26,15 +26,15 @@ public class BeerTest {
     public void checkConstructor() {
         //Assert
         assertTrue(beer.getProductId() > 0);
-        assertEquals("Test Beer", beer.getItemName());
-        assertEquals(10, beer.getQuantityInStock());
-        assertEquals(20, beer.getItemPrice());
-        assertEquals("IPA", beer.getBeerType());
-        assertEquals(6.5, beer.getAlcoholByVolume(), 0);
-        assertEquals("TestBrew Corporation", beer.getManufacturer());
-        assertEquals("Tastes really good", beer.getDescription());
-        assertTrue(beer.isACan());
-        assertEquals(330, beer.getVolume(), 0);
+        assertEquals(name, beer.getItemName());
+        assertEquals(quantity, beer.getQuantityInStock());
+        assertEquals(price, beer.getItemPrice());
+        assertEquals(type, beer.getBeerType());
+        assertEquals(abv, beer.getAlcoholByVolume(), 0);
+        assertEquals(manufacturer, beer.getManufacturer());
+        assertEquals(description, beer.getDescription());
+        assertSame(isCan, beer.isACan());
+        assertEquals(volume, beer.getVolume(), 0);
     }
 
     @Test
@@ -70,25 +70,12 @@ public class BeerTest {
         String str = beer.examine();
 
         //Assert
-        assertTrue(str.contains("--- Item description ---"));
-        assertTrue(str.contains("Container Type: Can"));
-        assertTrue(str.contains("Beer Type: IPA"));
-        assertTrue(str.contains("Volume in ml: 330"));
-        assertTrue(str.contains("Alcohol by volume: 6.5"));
-        assertTrue(str.contains("Manufacturer: TestBrew Corporation"));
-        assertTrue(str.contains("Description: Tastes really good"));
-    }
-
-    @Test
-    public void checkExamineStringAfterChange() {
-        //Arrange
-        beer.setDescription("Tastes mediocre");
-
-        //Act
-        String str = beer.examine();
-
-        //Assert
-        assertTrue(str.contains("Description: Tastes mediocre"));
+        assertTrue(str.contains((beer.isACan()) ? "Can" : "Bottle"));
+        assertTrue(str.contains(beer.getBeerType()));
+        assertTrue(str.contains(Integer.toString( beer.getVolume() )));
+        assertTrue(str.contains(Double.toString( beer.getAlcoholByVolume() )));
+        assertTrue(str.contains(beer.getManufacturer()));
+        assertTrue(str.contains(beer.getDescription()));
     }
 
 }

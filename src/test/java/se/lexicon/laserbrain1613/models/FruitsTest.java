@@ -21,7 +21,7 @@ public class FruitsTest {
     }
 
     @Test
-    public void checkConstructor() {
+    public void constructor() {
         //Assert
         assertTrue(fruits.getProductId() > 0);
         assertEquals(name, fruits.getItemName());
@@ -34,7 +34,7 @@ public class FruitsTest {
     }
 
     @Test
-    public void checkSetters() {
+    public void setters() {
         //Arrange
         fruits.setItemName("Tomato");
         fruits.setQuantityInStock(5);
@@ -56,7 +56,7 @@ public class FruitsTest {
     }
 
     @Test
-    public void checkExamineString() {
+    public void examine() {
         //Act
         String str = fruits.examine();
 

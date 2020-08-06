@@ -23,7 +23,7 @@ public class BeerTest {
     }
 
     @Test
-    public void checkConstructor() {
+    public void constructor() {
         //Assert
         assertTrue(beer.getProductId() > 0);
         assertEquals(name, beer.getItemName());
@@ -38,7 +38,7 @@ public class BeerTest {
     }
 
     @Test
-    public void checkSetters() {
+    public void setters() {
         //Arrange
         int productId = beer.getProductId();
         beer.setItemName("New Name");
@@ -65,7 +65,7 @@ public class BeerTest {
     }
 
     @Test
-    public void checkExamineString() {
+    public void examine() {
         //Act
         String str = beer.examine();
 

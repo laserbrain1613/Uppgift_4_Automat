@@ -3,40 +3,49 @@ package se.lexicon.laserbrain1613.models;
 import org.junit.Before;
 import org.junit.Test;
 import se.lexicon.laserbrain1613.Machine;
+
 import static org.junit.Assert.*;
 
 public class MachineTest {
 
     private Machine machine;
 
+    public void replenishMachine() { // Default replenishment
+        machine.stockMachine( new Beer("Test Beer", 10, 20, "IPA", 6.5, "TestBrew Corporation", "Tastes really good", true, 330) );
+        machine.stockMachine( new Beer("Fine Beer", 12, 25, "DIPA", 7.2, "FineBrew Corporation", "Great Taste", false, 500) );
+        machine.stockMachine( new Beer("Extends", 1, 79, "Imperial Oatmeal Stout", 11.5, "Nerdbrewing", "Try it to believe it", true, 330) );
+        machine.stockMachine( new Sweets("Lollipop", 19, 15, "Candy", 5, true, true) );
+        machine.stockMachine( new Sweets("Marabou Mjölkchoklad", 0, 18, "Chocolate", 9, true, false) );
+        machine.stockMachine( new Sweets("Guylian Stevia Dark Chocolate", 11, 23, "Chocolate", 7, false, false) );
+        machine.stockMachine( new Fruits("Banana", 8, 12, "Mildly sweet", "Yellow", 4, false) );
+        machine.stockMachine( new Fruits("Tomato", 12, 18, "Semi-sweet", "Red", 5, true) );
+        machine.stockMachine( new Fruits("Apple", 4, 9, "Sweet", "Green", 5, false) );
+    }
+
     @Before
     public void setUp()  {
         machine = new Machine();
-        machine.replenishMachine(); // Fills array with 9 default objects
+        replenishMachine();
     }
 
     @Test
-    public void check_MoneyPool() {
+    public void getBalance() {
         //Act
-        int firstValue = machine.getBalance(); // Empty
-        machine.setBalance(Integer.MAX_VALUE);
-        int secondValue = machine.getBalance();
+        machine.setBalance(500);
 
         //Assert
-        assertEquals(0, firstValue);
-        assertEquals(secondValue, Integer.MAX_VALUE);
+        assertEquals(500, machine.getBalance());
     }
 
     @Test
-    public void addCurrencyValidDenominators() {
+    public void addCurrency_ValidDenominators() {
         //Arrange
-        int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
         int result =0;
 
         //Act
-        for (int sum : acceptedDenominators) {
-            result += sum; // Adds up to 1888
-            machine.addCurrency(sum);
+        for (int sum : machine.getAcceptedDenominators()) {
+            result += sum; //Adds every denominator to result
+            machine.addCurrency(sum); //Attempts to add current denominator to pool
         }
 
         //Assert
@@ -44,45 +53,34 @@ public class MachineTest {
     }
 
     @Test
-    public void addCurrencyInvalidDenominators() {
+    public void addCurrency_InvalidDenominator() {
         //Arrange
-        int[] acceptedDenominators = {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
+        machine.setBalance(25);
 
         //Act
-        for (int sum : acceptedDenominators) {
-            machine.addCurrency(sum + 2); // 3, 4, 7, 12 and so on
-        }
+        machine.addCurrency(Integer.MIN_VALUE); // Negative value is always impossible
 
         //Assert
-        assertEquals(0, machine.getBalance());
+        assertEquals(25, machine.getBalance());
     }
 
     @Test
     public void getDescription_FoundEntry() {
         //Arrange
-        String str = machine.getDescription(9);
+        machine.stockMachine( new Fruits("Kiwi", 80, 20, "Super sweet", "Brown", 15, false) );
+        String str = machine.getDescription(machine.findAll().length); // Most recently added product
 
         //Assert
-        assertTrue(str.contains("--- Item description ---"));
-        assertTrue(str.contains("Flavor: Sweet"));
-        assertTrue(str.contains("Color: Green"));
-        assertTrue(str.contains("Weight: 5"));
-        assertTrue(str.contains("Is a vegetable: No"));
+        assertTrue(str.contains("Super sweet"));
+        assertTrue(str.contains("Brown"));
+        assertTrue(str.contains("15"));
+        assertTrue(str.contains("No"));
     }
 
     @Test
-    public void getDescription_EmptyIndex() {
+    public void getDescription_FoundNoEntry() {
         //Arrange
-        String str = machine.getDescription(10); // Index 9 in the array was left empty on purpose
-
-        //Assert
-        assertTrue(str.contains("No product found on this index"));
-    }
-
-    @Test
-    public void getDescription_IndexOutOfBounds() {
-        //Arrange
-        String str = machine.getDescription(11); // Index 10 does not exist
+        String str = machine.getDescription(Integer.MAX_VALUE);
 
         //Assert
         assertTrue(str.contains("No product found on this index"));
@@ -93,13 +91,10 @@ public class MachineTest {
         //Arrange
 
         //Act
-        String[] str = machine.getProducts(); // Our test machine has 10 slots of which 9 are filled
+        String[] str = machine.getProducts();
 
         //Assert
-        assertEquals(9, str.length);
-        assertTrue(str[0].contains("Test Beer"));
-        assertTrue(str[3].contains("Lollipop"));
-        assertTrue(str[6].contains("Banana"));
+        assertEquals(str.length, machine.findAll().length);
         }
 
     @Test
@@ -133,10 +128,10 @@ public class MachineTest {
     @Test
     public void request_IsWorkingExactPoolAmount() {
         //Arrange
-        machine.setBalance(20);
+        machine.setBalance(machine.findAll()[0].getItemPrice());
 
         //Act
-        Product pro = machine.request(1); // Item costs 20
+        Product pro = machine.request(1);
 
         //Assert
         assertEquals(0, machine.getBalance());
@@ -146,36 +141,25 @@ public class MachineTest {
     @Test
     public void request_NotEnoughMoney() {
         //Arrange
-        machine.setBalance(19);
+        machine.setBalance(machine.findAll()[0].getItemPrice() -1) ;
+        int balance = machine.getBalance( );
 
         //Act
-        Product pro = machine.request(1); // Item costs 20, can't afford it
+        Product pro = machine.request(1);
 
         //Assert
-        assertEquals(19, machine.getBalance());
+        assertEquals(balance, machine.getBalance());
         assertNull(pro);
     }
 
     @Test
     public void request_OutOfStock () {
         //Arrange
+        machine.stockMachine( new Fruits("Kiwi", 0, 20, "Super sweet", "Brown", 15, false) );
         machine.setBalance(Integer.MAX_VALUE);
 
         //Act
-        Product pro = machine.request(5);
-
-        //Assert
-        assertEquals(Integer.MAX_VALUE, machine.getBalance());
-        assertNull(pro);
-    }
-
-    @Test
-    public void request_ProductDoesNotExist() {
-        //Arrange
-        machine.setBalance(Integer.MAX_VALUE);
-
-        //Act
-        Product pro = machine.request(10); // Index 9 is empty (no object within)
+        Product pro = machine.request(machine.findAll().length);
 
         //Assert
         assertEquals(Integer.MAX_VALUE, machine.getBalance());
@@ -188,27 +172,11 @@ public class MachineTest {
         machine.setBalance(Integer.MAX_VALUE);
 
         //Act
-        Product product = machine.request(Integer.MAX_VALUE); // Out of range, array index is between 0-9 (10 elements)
+        Product product = machine.request(Integer.MAX_VALUE);
 
         //Assert
         assertEquals(Integer.MAX_VALUE, machine.getBalance());
         assertNull(product);
-    }
-
-    @Test
-    public void request_BuyMoreItems() { // I admit this test is a bit unnecessary
-        //Arrange
-        machine.setBalance(Integer.MAX_VALUE);
-        int counter = 0;
-
-        //Act
-        for (int i = 1; i < 11 ; i++) {
-            Product product = machine.request(i);
-            counter += (product != null ? 1 : 0); // Won't buy from index 4 (out of stock) and 9 (null)
-        }
-
-        //Assert
-        assertEquals(8, counter);
     }
 
 }

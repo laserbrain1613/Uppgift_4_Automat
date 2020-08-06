@@ -12,7 +12,6 @@ public class ProductTest {
     @Before
     public void setUp() {
         product = new Product("Test Beer",5, 50) {}; // Creates Product without a child
-
     }
 
     @Test
@@ -24,12 +23,12 @@ public class ProductTest {
         String str = product.use();
 
         //Assert
-        assertTrue(str.contains("You have received 'Test Beer' from the machine."));
+        assertTrue(str.contains(product.getItemName()));
         assertEquals(oldQuantity-1, product.getQuantityInStock());
     }
 
     @Test
-    public void checkSetters() {
+    public void setters() {
         //Arrange
         product.setItemName("New Name");
         product.setQuantityInStock(20);
@@ -53,10 +52,10 @@ public class ProductTest {
         String str = product.examine();
 
         //Assert
-        assertTrue(str.contains("Product Id: 1"));
-        assertTrue(str.contains("Item name: Test Beer"));
-        assertTrue(str.contains("Quantity in stock: 5"));
-        assertTrue(str.contains("Item price 50"));
+        assertTrue(str.contains(Integer.toString(product.getProductId())));
+        assertTrue(str.contains(product.getItemName()));
+        assertTrue(str.contains(Integer.toString(product.getQuantityInStock())));
+        assertTrue(str.contains(Integer.toString(product.getItemPrice())));
     }
 
 }
